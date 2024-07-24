@@ -1,0 +1,18 @@
+/* Contoh animasi untuk input focus */
+@keyframes focusAnimation {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+input:focus {
+    animation: focusAnimation 0.3s ease-in-out;
+}
+
+/* Contoh animasi untuk tombol */
+button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
