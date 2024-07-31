@@ -7,6 +7,7 @@ const kartuAbsenController = require('../controller/kartuAbsenController');
 router.get('/', kartuAbsenController.getAllKartuAbsen);
 router.get('/by-id/:id', kartuAbsenController.getKartuAbsenById);
 router.get('/by-nomor-kartu', kartuAbsenController.getKartuAbsenByNomorKartu);
+router.get('/pulang', kartuAbsenController.getpulang);
 router.get('/Nomor-kartu', kartuAbsenController.getDataByNomorKartu); // Updated route to use query params
 router.post('/', kartuAbsenController.createKartuAbsen);
 router.put('/:id', kartuAbsenController.updateKartuAbsen);

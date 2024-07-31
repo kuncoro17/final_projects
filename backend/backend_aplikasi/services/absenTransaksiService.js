@@ -2,11 +2,9 @@
 
 const AbsenTransaksi = require('../models/absenTransaksiModel');
 
-const createAbsenTransaksi = async (data) => {
+const createAbsenTransaksiService = async (data) => {
     try {
-       ;
         const newAbsen = await AbsenTransaksi.create(data);
-        console.log(3)
         return newAbsen;
     } catch (error) {
         console.error('Error in createAbsenTransaksi service:', error.message);
@@ -14,6 +12,17 @@ const createAbsenTransaksi = async (data) => {
     }
 };
 
+const updateTransaksiPresensiService = async (data) => {
+    try {
+        const updatedData = await AbsenTransaksi.update(data);
+        return updatedData;
+    } catch (error) {
+        console.error('Error in updateTransaksiPresensiService:', error.message);
+        throw error;
+    }
+};
+
 module.exports = {
-    createAbsenTransaksi,
+    createAbsenTransaksiService,
+    updateTransaksiPresensiService
 };

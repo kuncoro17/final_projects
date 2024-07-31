@@ -18,7 +18,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow only this origin
+    origin: 'http://localhost:3001', // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow cookies to be sent
     optionsSuccessStatus: 204

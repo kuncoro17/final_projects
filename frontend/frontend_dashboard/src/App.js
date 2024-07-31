@@ -1,29 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-// import HomePage from './pages/HomePage';
-import Dashboard from './pages/Dashboard';
-import PrivateRoute from './components/PrivateRoute';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Karyawan from './components/Karyawan';
+import KaryawanDetail from './components/KaryawanDetail';
+import LoginForm from './components/LoginForm';
+import KaryawanDetailByNik from './components/KaryawanDetailByNik';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/home" element={
-          <PrivateRoute>
-            <HomePage />
-          </PrivateRoute>
-        } /> */}
-        <Route path="/dashboard" element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        } />
-        <Route path="/" element={<Navigate to="/login" />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LoginForm />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/karyawan" element={<Karyawan />} />
+                <Route path="/karyawan-detail/:penempatan_payroll" element={<KaryawanDetail />} />
+                <Route path="/karyawan-detail-by-nik/:nik" element={<KaryawanDetailByNik />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

@@ -37,6 +37,24 @@ const getKartuAbsenByNomorKartu = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+const getpulang = async (req, res) => {
+    try {
+        const nomorKartu = req.query.nomor_kartu; // Use query parameters
+        if (!nomorKartu) {
+            return res.status(400).json({ message: 'Nomor Kartu is required' });
+        }
+
+        const pulang = await kartuAbsenService.getpulang(nomorKartu);
+
+        if (pulang) {
+            res.status(200).json(pulang);
+        } else {
+            res.status(404).json({ message: 'Kartu Absen not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 
 
@@ -95,5 +113,6 @@ module.exports = {
     getDataByNomorKartu,
     createKartuAbsen,
     updateKartuAbsen,
-    deleteKartuAbsen
+    deleteKartuAbsen,
+    getpulang
 };

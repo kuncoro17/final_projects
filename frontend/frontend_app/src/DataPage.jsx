@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import moment from 'moment-timezone';
 
 const DataPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { kartuAbsen } = location.state || {};
+    const hasSubmitted = useRef(false);
 
-    useEffect(() => {
-        if (kartuAbsen) {
-            createAttendanceRecord(kartuAbsen);
-        }
-    }, [kartuAbsen]);
+    const createAttendanceRecord = useCallback(async (data) => {
+        if (hasSubmitted.current) return;
 
-    const createAttendanceRecord = async (data) => {
+        hasSubmitted.current = true;
         try {
+            const timeZone = 'Asia/Jakarta';
+            const now = moment().tz(timeZone);
+
+            const formattedJamMasuk = now.format('YYYY-MM-DD HH:mm:ss');
+            const formattedTanggalMasuk = now.format('YYYY-MM-DD');
+
             const response = await fetch('http://localhost:3002/api/absen-transaksi/create', {
                 method: 'POST',
                 headers: {
@@ -24,9 +29,9 @@ const DataPage = () => {
                     nik: data.nik,
                     nama_lengkap: data.nama_lengkap,
                     kode_bagian: data.kode_bagian,
-                    jam_masuk: new Date().toISOString().slice(0, 19).replace('T', ' '),
-                    tanggal_masuk: new Date().toISOString().slice(0, 10),
-                    tanggal_insert: new Date().toISOString()
+                    jam_masuk: formattedJamMasuk,
+                    tanggal_masuk: formattedTanggalMasuk,
+                    tanggal_insert_masuk: now.toISOString()
                 }),
             });
 
@@ -35,12 +40,21 @@ const DataPage = () => {
             }
 
             alert('Berhasil melakukan absen');
-            navigate('/');
+
+            setTimeout(() => {
+                navigate('/');
+            }, 3000);
         } catch (error) {
-            console.error('Error creating attendance record:', error.message); // Detailed error logging
+            console.error('Error creating attendance record:', error.message);
             alert(`Error creating attendance record: ${error.message}`);
         }
-    };
+    }, [navigate]);
+
+    useEffect(() => {
+        if (kartuAbsen) {
+            createAttendanceRecord(kartuAbsen);
+        }
+    }, [kartuAbsen, createAttendanceRecord]);
 
     if (!kartuAbsen) {
         return <p>No data available</p>;

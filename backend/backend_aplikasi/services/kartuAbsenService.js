@@ -13,6 +13,20 @@ const   getKartuAbsenByNomorKartu = async (nomor_kartu) => {
 const getDataByNomorKartu = async (nomor_kartu) => {
     return await KartuAbsen.getDataByNomorKartu(nomor_kartu);
 };
+const getpulang = async (nomor_kartu) => {
+    try {
+        return await KartuAbsen.getpulang(nomor_kartu);
+    } catch (error) {
+        console.error('Error in getpulang service:', error.message);
+        throw error;
+    }
+};
+
+module.exports = {
+    getpulang
+};
+
+
 
 const createKartuAbsen = async (data) => {
     return await KartuAbsen.create(data);
@@ -45,5 +59,6 @@ module.exports = {
     getDataByNomorKartu,
     createKartuAbsen,
     updateKartuAbsen,
-    deleteKartuAbsen
+    deleteKartuAbsen,
+    getpulang
 };
