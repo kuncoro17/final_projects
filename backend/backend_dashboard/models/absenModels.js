@@ -83,10 +83,32 @@ const getAbsenByKodeBagian = async (kode_bagian) => {
     }
 };
 
+const getMonthlyAttendance = async () => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                EXTRACT(MONTH FROM tanggal_masuk) AS bulan,
+                COUNT(nik) AS total_nik
+            FROM 
+                transaksi_presensi
+            WHERE 
+                EXTRACT(YEAR FROM tanggal_masuk) = EXTRACT(YEAR FROM CURRENT_DATE)
+            GROUP BY 
+                EXTRACT(MONTH FROM tanggal_masuk)
+            ORDER BY 
+                bulan ASC;
+        `);
+        return result.rows; // Ensure you return the rows
+    } catch (error) {
+        console.error('Error in getMonthlyAttendance model:', error.message);
+        throw error;
+    }
+};
 
 module.exports = {
     getAbsen,
     getAbsenBynik,
     getAbsenBytanggal,
-    getAbsenByKodeBagian
+    getAbsenByKodeBagian,
+    getMonthlyAttendance
 };

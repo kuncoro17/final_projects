@@ -1,5 +1,6 @@
+// KaryawanDetail.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getKaryawanByPenempatanPayroll } from '../services/ApiServices';
 import Header from './Header';
 import Footer from './Footer';
@@ -8,17 +9,18 @@ import SidebarNav from './SidebarNav';
 const KaryawanDetail = () => {
     const { penempatan_payroll } = useParams();
     const [karyawanData, setKaryawanData] = useState([]);
-    const [loading, setLoading] = useState(true); // Tambahkan state loading
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getKaryawanByPenempatanPayroll(penempatan_payroll);
+                console.log("Karyawan data:", data); // Debug line
                 setKaryawanData(data);
             } catch (error) {
                 console.error('Error fetching karyawan data:', error);
             } finally {
-                setLoading(false); // Set loading ke false setelah data di-fetch
+                setLoading(false);
             }
         };
 
@@ -53,9 +55,9 @@ const KaryawanDetail = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{karyawan.nik}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{karyawan.penempatan_payroll}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-                                                        Detail
-                                                    </button>
+                                                    <Link to={`/karyawan-detail-by-nik/${karyawan.nik}`} className="mt-2 text-blue-600 hover:underline">
+                                                        <strong>Details</strong>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))

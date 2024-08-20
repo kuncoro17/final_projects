@@ -25,8 +25,36 @@ const getkaryawanbyNik = async (penempatan_payroll) => {
         throw new Error('Database query failed');
     }
 };
+const updateUser = async (nik, nama_lengkap, penempatan_payroll) => {
+    try {
+        const result = await pool.query(
+            'UPDATE karyawan_data SET nama_lengkap = $1, penempatan_payroll = $2 WHERE nik = $3',
+            [nama_lengkap, penempatan_payroll, nik]
+        );
+        return result; // Return result to access rowCount
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw new Error('Update failed');
+    }
+};
+const insertKaryawan = async (nik, nama_lengkap, penempatan_payroll, photoPath) => {
+    try {
+        const result = await pool.query(
+            'INSERT INTO karyawan_data (nik, nama_lengkap, penempatan_payroll, photo) VALUES ($1, $2, $3, $4)  RETURNING id_karyawan_data',
+            [nik, nama_lengkap, penempatan_payroll, photoPath]
+        );
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error inserting Karyawan:', error);
+        throw new Error('Insertion failed');
+    }
+};
+
+
 module.exports = {
     getkaryawan,
     getkaryawanbypenempatanpayroll,
-    getkaryawanbyNik
+    getkaryawanbyNik,
+    updateUser,
+    insertKaryawan
 };

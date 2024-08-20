@@ -1,4 +1,5 @@
-const { getAbsen, getAbsenBynik: getAbsenBynikFromService, getAbsenBytanggal,getAbsenByKodeBagian } = require('../services/absenServices');
+const { getAbsen, getAbsenBynik: getAbsenBynikFromService, getAbsenBytanggal,getAbsenByKodeBagian,getMonthlyAttendance } = require('../services/absenServices');
+
 
 const fetchAllAbsen = async (req, res) => {
     try {
@@ -9,6 +10,12 @@ const fetchAllAbsen = async (req, res) => {
         res.status(500).json({ message: 'Error fetching all absens' });
     }
 };
+const logout = (req, res) => {
+    // Any server-side logout logic (if necessary) goes here
+    // For stateless JWT, this might just return a success message
+    res.json({ message: 'Logout successful' });
+};
+
 
 const getAbsenBynik = async (req, res) => {
     const { nik } = req.query; // Use query parameter here
@@ -48,10 +55,25 @@ const fetchAbsenByKodeBagian = async (req, res) => {
         res.status(500).json({ message: 'Error fetching absens by kode_bagian' });
     }
 };
+// controllers/attendanceController.js
+
+
+const getMonthlyAttendanceData = async (req, res) => {
+    try {
+        const data = await getMonthlyAttendance();
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching monthly attendance data' });
+    }
+};
+
+
 
 module.exports = {
     fetchAllAbsen,
     getAbsenBynik,
     fetchAbsenByTanggal,
-    fetchAbsenByKodeBagian
+    fetchAbsenByKodeBagian,
+    getMonthlyAttendanceData,
+    logout
 };

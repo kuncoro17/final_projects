@@ -41,9 +41,9 @@ const DataPage = () => {
 
             alert('Berhasil melakukan absen');
 
-            setTimeout(() => {
-                navigate('/');
-            }, 3000);
+            // setTimeout(() => {
+            //     navigate('/');
+            // }, 3000);
         } catch (error) {
             console.error('Error creating attendance record:', error.message);
             alert(`Error creating attendance record: ${error.message}`);
@@ -63,7 +63,29 @@ const DataPage = () => {
     return (
         <div className="container mx-auto p-6">
             <h1 className="text-4xl font-bold text-blue-500 mb-5">Card Data</h1>
-            <pre className="bg-gray-100 p-4 rounded">{JSON.stringify(kartuAbsen, null, 2)}</pre>
+            <div className="bg-white shadow-lg rounded-lg p-6">
+               
+                <div className="text-center">
+                    <h2 className="text-2xl font-semibold mb-2">{kartuAbsen.nama_lengkap}</h2>
+                    <p className="text-gray-700 mb-2">NIK: {kartuAbsen.nik}</p>
+                    <p className="text-gray-700 mb-2">Card Number: {kartuAbsen.nomor_kartu}</p>
+                    <p className="text-gray-700 mb-2">Photo: </p>
+                    <img 
+                            src={`${kartuAbsen.photo}`} 
+                          
+                            className="w-32 h-32 object-cover rounded-full mx-auto mb-2"
+                        />
+                    <p className="text-gray-700 mb-2">Department Code: {kartuAbsen.kode_bagian}</p>
+                </div>
+                <div className="flex justify-center mt-4">
+                    <button 
+                        onClick={() => createAttendanceRecord(kartuAbsen)} 
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    >
+                        Submit Attendance
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

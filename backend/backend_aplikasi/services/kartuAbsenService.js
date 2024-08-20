@@ -10,8 +10,8 @@ const getKartuAbsenById = async (id) => {
 const   getKartuAbsenByNomorKartu = async (nomor_kartu) => {
     return await KartuAbsen.getKartuAbsenByNomorKartu(nomor_kartu);
 };
-const getDataByNomorKartu = async (nomor_kartu) => {
-    return await KartuAbsen.getDataByNomorKartu(nomor_kartu);
+const getDataByNomorKartu = async (nik) => {
+    return await KartuAbsen.getDataByNomorKartu(nik);
 };
 const getpulang = async (nomor_kartu) => {
     try {
@@ -22,6 +22,7 @@ const getpulang = async (nomor_kartu) => {
     }
 };
 
+
 module.exports = {
     getpulang
 };
@@ -29,22 +30,23 @@ module.exports = {
 
 
 const createKartuAbsen = async (data) => {
-    return await KartuAbsen.create(data);
+    const { nik, nomor_kartu } = data;
+    await KartuAbsen.createKartuAbsen(nik, nomor_kartu);
+    return { message: 'Kartu Absen created successfully' };
 };
 
-const updateKartuAbsen = async (id, data) => {
-    return await KartuAbsen.update(data, {
-        where: { id_kartu: id }
-    });
-};
 
+const updateKartuAbsen = async (nik, nomor_kartu) => {
+    await KartuAbsen.updateKartuAbsen(nik, nomor_kartu);
+    // Optionally, return something or fetch updated data if needed
+};
 const deleteKartuAbsen = async (id) => {
     return await KartuAbsen.destroy({
         where: { id_kartu: id }
     });
 };
 // services/kartuAbsenService.js
-const pool = require('../config/db');
+// const pool = require('../config/db');
 
 exports.getUserByNomorKartu = async (nomor_kartu) => {
     const result = await pool.query('SELECT * FROM kartu_absen WHERE nomor_kartu = $1', [nomor_kartu]);

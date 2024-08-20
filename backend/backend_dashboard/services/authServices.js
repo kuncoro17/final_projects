@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModels');
 
 const loginUser = async (username, password) => {
-    const user = await userModel.getUserByUsername(username);
+    const user = await userModel.Login(username);
 
     if (!user) {
         throw new Error('Invalid username or password');
@@ -27,8 +27,8 @@ const registerUser = async (nik, username, password, kode_bagian) => {
     await userModel.createUser(nik, username, hashedPassword, kode_bagian);
 };
 
-const getUserByUsername = async (username) => {
-    return await userModel.getUserByUsername(username);
+const getUserByUsername = async (nik) => {
+    return await userModel.getUserByUsername(nik);
 };
 const getUserByUsernamekaryawan = async (username) => {
     return await userModel.getUserByUsernamekaryawan(username);

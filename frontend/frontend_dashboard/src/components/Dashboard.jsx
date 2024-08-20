@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
@@ -56,8 +55,7 @@ const Dashboard = () => {
                             {karyawanData.length > 0 ? (
                                 karyawanData.map((karyawan) => (
                                     <div key={karyawan.id} className="bg-white p-4 rounded-lg shadow-md">
-                                      
-                                        <p className="mt-2 text-gray-600"><strong>Jumalh Karyawan:</strong> {karyawan.nik}</p>
+                                        <p className="mt-2 text-gray-600"><strong>Jumlah Karyawan:</strong> {karyawan.nik}</p>
                                         <p className="mt-2 text-gray-600"><strong>Kode Bagian:</strong> {karyawan.penempatan_payroll}</p>
                                     </div>
                                 ))

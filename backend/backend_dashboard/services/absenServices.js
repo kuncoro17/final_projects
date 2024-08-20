@@ -22,10 +22,15 @@ const getAbsenByKodeBagian = async (kode_bagian) => {
         throw error;
     }
 };
+const getMonthlyAttendance = async () => {
+    return await absenModel.getMonthlyAttendance();
+};
+
 
 module.exports = {
     getAbsen,
     getAbsenBynik,
     getAbsenBytanggal,
-    getAbsenByKodeBagian
+    getAbsenByKodeBagian,
+    getMonthlyAttendance
 };

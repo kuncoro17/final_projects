@@ -10,13 +10,13 @@ const getKartuAbsenById = async (id) => {
     const result = await pool.query('SELECT * FROM kartu_absen WHERE id_kartu = $1', [id]);
     return result.rows[0];
 };
-const getDataByNomorKartu = async (nomor_kartu) => {
-    const result = await pool.query('SELECT * FROM kartu_absen where  nomor_kartu = $1', [nomor_kartu]);
+const getDataByNomorKartu = async (nik) => {
+    const result = await pool.query('SELECT * FROM kartu_absen where  nik = $1', [nik]);
     return result.rows[0];
 };
 
 const getKartuAbsenByNomorKartu = async (nomor_kartu) => {
-    const result = await pool.query('SELECT kartu_absen.id_kartu,kartu_absen.nik,kartu_absen.nomor_kartu,karyawan_data.nama_lengkap,users.kode_bagian FROM kartu_absen JOIN users ON kartu_absen.nik = users.nik JOIN karyawan_data ON kartu_absen.nik = karyawan_data.nik WHERE kartu_absen.nomor_kartu = $1', [nomor_kartu]);
+    const result = await pool.query('SELECT kartu_absen.id_kartu,kartu_absen.nik,kartu_absen.nomor_kartu,karyawan_data.nama_lengkap,karyawan_data.photo,users.kode_bagian FROM kartu_absen JOIN users ON kartu_absen.nik = users.nik JOIN karyawan_data ON kartu_absen.nik = karyawan_data.nik WHERE kartu_absen.nomor_kartu = $1', [nomor_kartu]);
     return result.rows[0]; // Returns null if no rows are found
 };
 const createKartuAbsen = async (nik, nomor_kartu) => {
@@ -24,7 +24,10 @@ const createKartuAbsen = async (nik, nomor_kartu) => {
 };
 
 const updateKartuAbsen = async (id, nik, nomor_kartu) => {
-    await pool.query('UPDATE kartu_absen SET nik = $1, nomor_kartu = $2 WHERE id_kartu = $3', [nik, nomor_kartu, id]);
+    await pool.query(
+        'UPDATE kartu_absen SET nomor_kartu = $1 WHERE nik = $2',
+        [nomor_kartu, nik]
+    );
 };
 
 const deleteKartuAbsen = async (id) => {

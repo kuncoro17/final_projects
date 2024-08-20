@@ -66,22 +66,18 @@ const createKartuAbsen = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 const updateKartuAbsen = async (req, res) => {
     try {
-        const updated = await kartuAbsenService.updateKartuAbsen(req.params.id, req.body);
-        if (updated) {
-            res.status(200).json({ message: 'Kartu Absen updated' });
-        } else {
-            res.status(404).json({ message: 'Kartu Absen not found' });
-        }
+        const { nik, nomor_kartu } = req.body;
+        await kartuAbsenService.updateKartuAbsen(nik, nomor_kartu);
+        res.status(200).json({ message: 'Kartu absen updated successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 const deleteKartuAbsen = async (req, res) => {
-    try {
+    try {   
         const deleted = await kartuAbsenService.deleteKartuAbsen(req.params.id);
         if (deleted) {
             res.status(200).json({ message: 'Kartu Absen deleted' });
@@ -94,7 +90,7 @@ const deleteKartuAbsen = async (req, res) => {
 };
 const getDataByNomorKartu = async (req, res) => {
     try {
-        const kartuAbsen = await kartuAbsenService.getDataByNomorKartu(req.params.nomor_kartu);
+        const kartuAbsen = await kartuAbsenService.getDataByNomorKartu(req.query.nik); // Change from req.params to req.query
         if (kartuAbsen) {
             res.status(200).json(kartuAbsen);
         } else {

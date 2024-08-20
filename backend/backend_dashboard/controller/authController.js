@@ -24,14 +24,14 @@ const register = async (req, res) => {
 };
 
 const getUserByUsername = async (req, res) => {
-    const username = req.query.username;
+    const nik = req.query.nik;
 
-    if (!username) {
+    if (!nik) {
         return res.status(400).json({ message: 'Username query parameter is required' });
     }
 
     try {
-        const user = await authService.getUserByUsername(username);
+        const user = await authService.getUserByUsername(nik);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
